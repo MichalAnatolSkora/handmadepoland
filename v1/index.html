@@ -54,17 +54,43 @@
         }
         .search-bar button:hover { background: #9a5418; }
 
-        /* CATEGORIES */
-        .categories {
-            display: flex; justify-content: center; gap: 12px;
-            padding: 0 20px 48px; flex-wrap: wrap;
+        /* CATEGORY TREE */
+        .cat-tree {
+            max-width: 1100px; margin: 0 auto; padding: 0 20px 48px;
         }
-        .cat-pill {
-            padding: 8px 18px; border-radius: 20px; background: #fff;
-            border: 1px solid #e8e4df; font-size: 0.85rem; color: #555;
-            text-decoration: none;
+        .cat-tree h2 {
+            font-size: 1.5rem; font-weight: 600; margin-bottom: 16px; color: #2d2d2d;
         }
-        .cat-pill:hover { border-color: #b5651d; color: #b5651d; }
+        .cat-filter {
+            width: 100%; max-width: 400px; padding: 10px 16px;
+            border: 1px solid #e8e4df; border-radius: 8px; font-size: 0.9rem;
+            outline: none; background: #fff; margin-bottom: 20px;
+        }
+        .cat-filter:focus { border-color: #b5651d; }
+        .cat-group.hidden { display: none; }
+        .cat-group li.hidden { display: none; }
+        .cat-no-results {
+            display: none; color: #999; font-size: 0.9rem; padding: 12px 0;
+        }
+        .cat-columns {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+        }
+        .cat-group h3 {
+            font-size: 0.95rem; font-weight: 700; color: #b5651d; margin-bottom: 10px;
+            padding-bottom: 6px; border-bottom: 2px solid #f0e6d9;
+        }
+        .cat-group ul { list-style: none; }
+        .cat-group li { margin-bottom: 6px; }
+        .cat-group a {
+            text-decoration: none; color: #555; font-size: 0.85rem;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 4px 0;
+        }
+        .cat-group a:hover { color: #b5651d; }
+        .cat-count {
+            font-size: 0.75rem; color: #bbb; background: #f5f3f0;
+            padding: 2px 8px; border-radius: 10px;
+        }
 
         /* SECTION */
         .section { max-width: 1100px; margin: 0 auto; padding: 0 20px 56px; }
@@ -106,6 +132,40 @@
             text-align: center; padding: 32px 20px;
             border-top: 1px solid #e8e4df; color: #aaa; font-size: 0.8rem;
         }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            nav { padding: 12px 16px; }
+            .nav-links { gap: 12px; }
+            .nav-links a:not(.btn-sell) { display: none; }
+
+            .hero {
+                flex-direction: column; gap: 24px;
+                padding: 32px 16px 24px; text-align: center;
+            }
+            .hero-img { order: -1; }
+            .hero-img img { width: 200px; height: 240px; }
+            .hero h1 { font-size: 1.6rem; }
+            .hero p { font-size: 0.95rem; margin: 0 auto 20px; }
+            .search-bar { max-width: 100%; }
+
+            .cat-columns { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+            .section { padding: 0 16px 40px; }
+            .section h2 { font-size: 1.2rem; }
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .card-body { padding: 10px; }
+            .card-body h3 { font-size: 0.85rem; }
+            .card-body .artisan { font-size: 0.7rem; }
+            .card-body .price { font-size: 0.95rem; }
+            .badge { font-size: 0.6rem; padding: 2px 6px; }
+        }
+        @media (max-width: 400px) {
+            .cat-columns { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -134,15 +194,56 @@
     </div>
 </div>
 
-<div class="categories">
-    <a href="#" class="cat-pill">Ceramika</a>
-    <a href="#" class="cat-pill">Biżuteria</a>
-    <a href="#" class="cat-pill">Drewno</a>
-    <a href="#" class="cat-pill">Tekstylia</a>
-    <a href="#" class="cat-pill">Skóra</a>
-    <a href="#" class="cat-pill">Świece</a>
-    <a href="#" class="cat-pill">Papier</a>
-    <a href="#" class="cat-pill">Metaloplastyka</a>
+<div class="cat-tree">
+    <h2>Kategorie</h2>
+    <input type="text" class="cat-filter" placeholder="Filtruj kategorie..." id="catFilter">
+    <p class="cat-no-results" id="catNoResults">Nie znaleziono kategorii.</p>
+    <div class="cat-columns">
+        <div class="cat-group">
+            <h3>Ceramika i szkło</h3>
+            <ul>
+                <li><a href="#">Wazony <span class="cat-count">124</span></a></li>
+                <li><a href="#">Talerze i miski <span class="cat-count">89</span></a></li>
+                <li><a href="#">Kubki i filiżanki <span class="cat-count">203</span></a></li>
+                <li><a href="#">Czajniki i dzbanki <span class="cat-count">47</span></a></li>
+                <li><a href="#">Figurki <span class="cat-count">62</span></a></li>
+                <li><a href="#">Kafle i płytki <span class="cat-count">31</span></a></li>
+            </ul>
+        </div>
+        <div class="cat-group">
+            <h3>Drewno i wiklina</h3>
+            <ul>
+                <li><a href="#">Deski kuchenne <span class="cat-count">78</span></a></li>
+                <li><a href="#">Rzeźby i figurki <span class="cat-count">53</span></a></li>
+                <li><a href="#">Meble <span class="cat-count">19</span></a></li>
+                <li><a href="#">Koszyki wiklinowe <span class="cat-count">41</span></a></li>
+                <li><a href="#">Zabawki drewniane <span class="cat-count">36</span></a></li>
+                <li><a href="#">Ramy i lustra <span class="cat-count">27</span></a></li>
+            </ul>
+        </div>
+        <div class="cat-group">
+            <h3>Biżuteria i akcesoria</h3>
+            <ul>
+                <li><a href="#">Pierścionki <span class="cat-count">156</span></a></li>
+                <li><a href="#">Naszyjniki <span class="cat-count">132</span></a></li>
+                <li><a href="#">Kolczyki <span class="cat-count">198</span></a></li>
+                <li><a href="#">Bransoletki <span class="cat-count">87</span></a></li>
+                <li><a href="#">Broszki <span class="cat-count">44</span></a></li>
+                <li><a href="#">Biżuteria z bursztynu <span class="cat-count">71</span></a></li>
+            </ul>
+        </div>
+        <div class="cat-group">
+            <h3>Tekstylia i skóra</h3>
+            <ul>
+                <li><a href="#">Torebki skórzane <span class="cat-count">63</span></a></li>
+                <li><a href="#">Szaliki i chusty <span class="cat-count">92</span></a></li>
+                <li><a href="#">Obrusy i serwety <span class="cat-count">38</span></a></li>
+                <li><a href="#">Portfele <span class="cat-count">55</span></a></li>
+                <li><a href="#">Chodniki i dywany <span class="cat-count">24</span></a></li>
+                <li><a href="#">Pościel lniana <span class="cat-count">17</span></a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <div class="section">
@@ -327,5 +428,47 @@
     <a href="../index.html">Wersje strony</a>
 </footer>
 
+<script>
+document.getElementById('catFilter').addEventListener('input', function() {
+    var q = this.value.toLowerCase().trim();
+    var groups = document.querySelectorAll('.cat-group');
+    var anyVisible = false;
+
+    groups.forEach(function(group) {
+        var items = group.querySelectorAll('li');
+        var groupTitle = group.querySelector('h3').textContent.toLowerCase();
+        var groupHasMatch = false;
+
+        if (!q) {
+            group.classList.remove('hidden');
+            items.forEach(function(li) { li.classList.remove('hidden'); });
+            anyVisible = true;
+            return;
+        }
+
+        var titleMatch = groupTitle.indexOf(q) !== -1;
+
+        items.forEach(function(li) {
+            var text = li.querySelector('a').childNodes[0].textContent.toLowerCase();
+            if (text.indexOf(q) !== -1 || titleMatch) {
+                li.classList.remove('hidden');
+                groupHasMatch = true;
+            } else {
+                li.classList.add('hidden');
+            }
+        });
+
+        if (groupHasMatch || titleMatch) {
+            group.classList.remove('hidden');
+            if (titleMatch) items.forEach(function(li) { li.classList.remove('hidden'); });
+            anyVisible = true;
+        } else {
+            group.classList.add('hidden');
+        }
+    });
+
+    document.getElementById('catNoResults').style.display = anyVisible ? 'none' : 'block';
+});
+</script>
 </body>
 </html>
