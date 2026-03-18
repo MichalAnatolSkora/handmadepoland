@@ -557,76 +557,90 @@
         }
         .toast.show { transform: translateY(0); opacity: 1; }
 
+        /* ─── MOBILE TABLE → CARD ─── */
+        .mobile-label { display: none; }
+
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
             .hamburger { display: block; }
 
-            /* topbar: compact, search below on mobile */
-            .topbar-inner { padding: 0 16px; height: 56px; gap: 10px; }
+            /* ── topbar ── */
+            .topbar-inner { padding: 0 12px; height: 52px; gap: 8px; }
             .topbar-search { display: none; }
             .topbar-actions .btn-primary { display: none; }
             .topbar-actions { gap: 6px; }
-            .topbar-actions .icon-btn { width: 36px; height: 36px; }
+            .topbar-actions .icon-btn { width: 34px; height: 34px; }
+            .mode-switch { padding: 2px; gap: 2px; }
             .mode-switch button { padding: 5px 10px; font-size: 0.72rem; }
-            .mode-switch { padding: 2px; }
 
-            /* mobile search bar — visible below topbar */
+            /* ── mobile search (buyer only — hidden via mode class) ── */
             .mobile-search {
-                display: block; padding: 8px 16px 10px;
+                display: block; padding: 8px 12px 10px;
                 background: var(--surface); border-bottom: 1px solid var(--border);
-                position: sticky; top: 56px; z-index: 199;
+                position: sticky; top: 52px; z-index: 199;
             }
+            .mobile-search { position: relative; }
             .mobile-search input {
-                width: 100%; padding: 10px 16px 10px 40px;
+                width: 100%; padding: 10px 16px 10px 38px;
                 border: 1px solid var(--border); border-radius: 24px;
-                font-size: 0.9rem; background: var(--surface-alt); outline: none;
+                font-size: 16px; background: var(--surface-alt); outline: none;
             }
             .mobile-search input:focus {
                 border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light);
             }
-            .mobile-search { position: relative; }
             .mobile-search svg {
-                position: absolute; left: 30px; top: 50%; transform: translateY(-50%);
+                position: absolute; left: 26px; top: 50%; transform: translateY(-50%);
                 width: 16px; height: 16px; color: var(--text-muted); pointer-events: none;
             }
 
-            /* nav tabs handled in mobile-open toggle below */
-
-            /* hero */
-            .hero {
-                grid-template-columns: 1fr; padding: 28px 16px 20px;
-                text-align: center; gap: 20px;
+            /* ── nav tabs → vertical dropdown ── */
+            .nav-tabs {
+                display: none; flex-direction: column;
+                background: var(--surface); border-bottom: 1px solid var(--border);
             }
-            .hero h1 { font-size: 1.7rem; letter-spacing: -0.5px; }
-            .hero p { font-size: 0.95rem; margin: 0 auto 20px; }
+            .nav-tabs.mobile-open { display: flex; }
+            .nav-tab {
+                border-bottom: none; border-left: 3px solid transparent;
+                text-align: left; padding: 14px 20px; flex-shrink: 0;
+                font-size: 0.85rem;
+            }
+            .nav-tab.active { border-left-color: var(--accent); border-bottom: none; }
+
+            /* ── hero ── */
+            .hero {
+                grid-template-columns: 1fr !important; padding: 24px 16px 20px !important;
+                text-align: center !important; gap: 20px;
+            }
+            .hero h1 { font-size: 1.6rem; letter-spacing: -0.5px; }
+            .hero p { font-size: 0.9rem; margin: 0 auto 16px; }
             .hero-actions { justify-content: center; }
             .hero-mosaic {
                 display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
             }
-            .hero-mosaic img:first-child { height: 160px; grid-row: span 2; }
-            .hero-mosaic img:nth-child(2) { height: 76px; }
-            .hero-mosaic img:nth-child(3) { height: 76px; }
+            .hero-mosaic img:first-child { height: 150px; grid-row: span 2; }
+            .hero-mosaic img:nth-child(2) { height: 71px; }
+            .hero-mosaic img:nth-child(3) { height: 71px; }
 
-            /* stats: 2×2 grid instead of row */
+            /* ── stats strip ── */
             .stats-strip {
                 display: grid; grid-template-columns: 1fr 1fr;
                 gap: 0; padding: 0;
             }
             .stat {
-                padding: 16px 12px;
+                padding: 14px 12px;
                 border-bottom: 1px solid var(--border);
                 border-right: 1px solid var(--border);
             }
             .stat:nth-child(2n) { border-right: none; }
             .stat:nth-last-child(-n+2) { border-bottom: none; }
-            .stat strong { font-size: 1.2rem; }
-            .stat span { font-size: 0.75rem; }
+            .stat strong { font-size: 1.15rem; }
+            .stat span { font-size: 0.72rem; }
 
-            /* categories */
-            .cat-section { padding: 28px 16px; }
-            .products-section { padding: 0 16px 40px; }
-            .section-header { margin-bottom: 16px; }
-            .section-header h2 { font-size: 1.15rem; }
+            /* ── categories ── */
+            .cat-section { padding: 24px 12px; }
+            .products-section { padding: 0 12px 36px; }
+            .section-header { margin-bottom: 14px; }
+            .section-header h2 { font-size: 1.1rem; }
             .cat-chips {
                 flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px;
                 -webkit-overflow-scrolling: touch; gap: 8px;
@@ -638,18 +652,14 @@
             .cat-chip-text strong { font-size: 0.78rem; }
             .cat-chip-text span { font-size: 0.68rem; }
 
-            /* categories page: chips wrap instead of scroll */
-            .cat-chips--wrap {
-                flex-wrap: wrap; overflow-x: visible;
-            }
-            .cat-chips--wrap .cat-chip {
-                flex: 1 1 calc(50% - 8px); min-width: 0;
-            }
+            /* categories page: chips wrap */
+            .cat-chips--wrap { flex-wrap: wrap; overflow-x: visible; }
+            .cat-chips--wrap .cat-chip { flex: 1 1 calc(50% - 8px); min-width: 0; }
             .cat-chips--wrap .cat-chip-text strong {
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             }
 
-            /* product grid: 2 columns with compact cards */
+            /* ── product grid ── */
             .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .card-img { aspect-ratio: 1; }
             .card-body { padding: 10px 12px; }
@@ -664,7 +674,7 @@
             .card-fav { width: 28px; height: 28px; top: 8px; right: 8px; }
             .card-fav svg { width: 14px; height: 14px; }
 
-            /* modal: full screen on mobile */
+            /* ── product modal → bottom sheet ── */
             .modal-overlay { padding: 0; align-items: flex-end; }
             .modal {
                 max-height: 95vh; border-radius: var(--radius-lg) var(--radius-lg) 0 0;
@@ -676,115 +686,148 @@
                 border-radius: var(--radius-lg) var(--radius-lg) 0 0;
             }
             .modal-content { padding: 20px 16px 24px; }
-            .modal-content h2 { font-size: 1.15rem; }
+            .modal-content h2 { font-size: 1.1rem; }
             .modal-content .modal-desc { font-size: 0.85rem; }
             .modal-price-row { flex-direction: column; gap: 12px; align-items: stretch; }
             .modal-price { font-size: 1.3rem; }
             .modal-price-row .btn-primary { text-align: center; }
 
-            /* cart panel: full width on small screens */
+            /* ── cart panel → full width ── */
             .cart-panel { width: 100vw; right: -100vw; }
             .cart-panel.open { right: 0; }
-            .cart-header { padding: 16px; }
+            .cart-header { padding: 14px 16px; }
             .cart-body { padding: 12px 16px; }
-            .cart-item img { width: 60px; height: 60px; }
-            .cart-footer { padding: 16px; }
+            .cart-item img { width: 56px; height: 56px; }
+            .cart-footer { padding: 14px 16px; }
 
-            /* dashboard */
-            .dash { padding: 20px 16px; }
-            .dash-header { flex-direction: column; gap: 12px; align-items: flex-start; }
-            .dash-header h1 { font-size: 1.3rem; }
-            .dash-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
-            .dash-stat { padding: 14px; }
-            .dash-stat strong { font-size: 1.2rem; }
+            /* ── dashboard / seller ── */
+            .dash { padding: 16px 12px; }
+            .dash-header { flex-direction: column; gap: 10px; align-items: stretch; }
+            .dash-header h1 { font-size: 1.25rem; }
+            .dash-header .btn-primary { text-align: center; }
+            .dash-section-title { font-size: 1rem; margin-top: 8px; }
+            .dash-stats { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .dash-stat { padding: 12px; }
+            .dash-stat span { font-size: 0.72rem; }
+            .dash-stat strong { font-size: 1.15rem; }
+            .dash-stat small { font-size: 0.7rem; }
 
-            /* listings: card layout instead of table on mobile */
+            /* ── tables → mobile cards ── */
+            .listings-table { border: none; background: none; }
             .listings-table thead { display: none; }
-            .listings-table, .listings-table tbody,
-            .listings-table tr, .listings-table td {
-                display: block; width: 100%;
-            }
+            .listings-table tbody { display: flex; flex-direction: column; gap: 10px; }
             .listings-table tr {
-                padding: 14px 16px; border-bottom: 1px solid var(--border);
-                position: relative;
+                display: flex; flex-wrap: wrap; align-items: center;
+                gap: 6px 12px;
+                padding: 14px; border-radius: var(--radius);
+                background: var(--surface); border: 1px solid var(--border);
             }
             .listings-table td {
-                padding: 2px 0; border-bottom: none;
+                display: inline-flex; align-items: center; gap: 6px;
+                padding: 0; border: none !important; font-size: 0.82rem;
             }
-            .listings-table td:nth-child(1) { font-weight: 600; margin-bottom: 6px; }
-            .listings-table td:nth-child(5) { margin-top: 8px; }
-            .listing-product { gap: 10px; }
-            .listing-product img { width: 40px; height: 40px; }
+            .mobile-label {
+                display: inline; font-size: 0.68rem; font-weight: 600;
+                color: var(--text-muted); text-transform: uppercase;
+                letter-spacing: 0.3px;
+            }
 
-            /* add product form */
-            .form-page { padding: 20px 16px; }
-            .form-page h1 { font-size: 1.2rem; }
+            /* product listings: first cell full width */
+            #listingsBody td:first-child { width: 100%; margin-bottom: 4px; }
+            #listingsBody .listing-product img { width: 36px; height: 36px; }
+
+            /* orders: layout */
+            #ordersTable td:first-child { font-size: 0.85rem; }
+            #ordersTable td:nth-child(4) {
+                width: 100%; order: 10;
+                font-size: 0.8rem; color: var(--text-secondary);
+                padding-top: 6px; margin-top: 2px;
+                border-top: 1px solid var(--border-light) !important;
+            }
+            #ordersTable td:last-child { margin-left: auto; }
+
+            /* seller-home recent orders */
+            #page-seller-home .listings-table td:first-child {
+                font-size: 0.85rem;
+            }
+
+            /* ── add product form ── */
+            .form-page { padding: 16px 12px; }
+            .form-page h1 { font-size: 1.15rem; margin-bottom: 18px; }
             .form-grid { grid-template-columns: 1fr; }
             .form-group.full { grid-column: span 1; }
+            .form-group { margin-bottom: 14px; }
             .form-group input, .form-group textarea, .form-group select {
                 font-size: 16px; /* prevents iOS zoom */
+                padding: 12px 14px;
             }
+            .form-group textarea { min-height: 100px; }
             .upload-zone { padding: 24px 16px; }
-            .form-actions { flex-direction: column; }
-            .form-actions button { width: 100%; text-align: center; }
-
-            /* how it works */
-            .how-section { padding: 32px 16px; }
-            .how-section h2 { font-size: 1.2rem; margin-bottom: 24px; }
-            .how-grid { grid-template-columns: 1fr; gap: 12px; }
-            .how-card { padding: 24px 16px; }
-
-            /* cta */
-            .cta-banner { padding: 0 16px 40px; }
-            .cta-inner {
-                flex-direction: column; text-align: center; gap: 20px;
-                padding: 32px 20px;
+            .upload-zone svg { width: 28px; height: 28px; }
+            .upload-zone p { font-size: 0.8rem; }
+            .form-actions {
+                flex-direction: column; gap: 8px;
+                padding-top: 14px;
             }
-            .cta-inner h2 { font-size: 1.2rem; }
-            .cta-inner p { font-size: 0.85rem; }
+            .form-actions button { width: 100%; text-align: center; padding: 12px; }
 
-            /* footer */
+            /* ── how it works ── */
+            .how-section { padding: 28px 12px; }
+            .how-section h2 { font-size: 1.15rem; margin-bottom: 20px; }
+            .how-grid { grid-template-columns: 1fr; gap: 10px; }
+            .how-card { padding: 20px 16px; }
+            .how-icon { width: 48px; height: 48px; font-size: 1.3rem; margin-bottom: 12px; }
+            .how-card h3 { font-size: 0.9rem; }
+            .how-card p { font-size: 0.8rem; }
+
+            /* ── cta ── */
+            .cta-banner { padding: 0 12px 36px; }
+            .cta-inner {
+                flex-direction: column; text-align: center; gap: 16px;
+                padding: 28px 16px;
+            }
+            .cta-inner h2 { font-size: 1.15rem; }
+            .cta-inner p { font-size: 0.82rem; }
+            .cta-inner .btn-primary { padding: 12px 28px; }
+
+            /* ── footer ── */
             .footer-inner {
-                grid-template-columns: 1fr 1fr; gap: 24px;
-                padding: 28px 16px 16px;
+                grid-template-columns: 1fr 1fr; gap: 20px;
+                padding: 24px 12px 12px;
             }
             .footer-brand { grid-column: span 2; }
-            .footer-bottom { padding: 12px 16px; }
+            .footer-brand p { font-size: 0.75rem; }
+            .footer-col h4 { font-size: 0.72rem; margin-bottom: 8px; }
+            .footer-col a { font-size: 0.8rem; margin-bottom: 6px; }
+            .footer-bottom { padding: 12px; font-size: 0.7rem; }
 
-            /* toast: centered on mobile */
+            /* ── toast ── */
             .toast {
-                left: 16px; right: 16px; bottom: 16px;
-                text-align: center;
+                left: 12px; right: 12px; bottom: 12px;
+                text-align: center; font-size: 0.82rem;
+                padding: 10px 16px;
             }
         }
 
+        /* ─── SMALL PHONES ─── */
         @media (max-width: 380px) {
-            .hero h1 { font-size: 1.45rem; }
+            .topbar-inner { padding: 0 10px; }
+            .mode-switch button { padding: 4px 8px; font-size: 0.68rem; }
+            .hero h1 { font-size: 1.4rem; }
             .hero-mosaic { display: none; }
-            .btn-primary { padding: 10px 18px; font-size: 0.8rem; }
-            .btn-outline { padding: 10px 18px; font-size: 0.8rem; }
+            .hero p { font-size: 0.85rem; }
+            .btn-primary { padding: 10px 16px; font-size: 0.78rem; }
+            .btn-outline { padding: 10px 16px; font-size: 0.78rem; }
             .grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
             .card-body { padding: 8px 10px; }
             .card-body h3 { font-size: 0.72rem; }
+            .card-artisan { font-size: 0.62rem; }
             .footer-inner { grid-template-columns: 1fr; }
             .footer-brand { grid-column: span 1; }
             .dash-stats { grid-template-columns: 1fr; }
             .cat-chips--wrap .cat-chip { flex: 1 1 100%; }
-        }
-
-        /* mobile nav toggle */
-        @media (max-width: 768px) {
-            .nav-tabs {
-                display: none; flex-direction: column;
-                border-bottom: none;
-                background: var(--surface); border-bottom: 1px solid var(--border);
-            }
-            .nav-tabs.mobile-open { display: flex; }
-            .nav-tab {
-                border-bottom: none; border-left: 3px solid transparent;
-                text-align: left; padding: 14px 20px;
-            }
-            .nav-tab.active { border-left-color: var(--accent); border-bottom: none; }
+            .how-grid { gap: 8px; }
+            .listings-table tr { padding: 12px; gap: 4px 8px; }
         }
 
         /* desktop: hide mobile search */
@@ -819,8 +862,8 @@
     </div>
 </div>
 
-<!-- ═══ MOBILE SEARCH ═══ -->
-<div class="mobile-search">
+<!-- ═══ MOBILE SEARCH (buyer only) ═══ -->
+<div class="mobile-search buyer-only">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <input type="text" placeholder="Szukaj produktów..." id="mobileSearch">
 </div>
@@ -1035,20 +1078,20 @@
             <tbody>
                 <tr>
                     <td><strong>#HP-2471</strong></td>
-                    <td>Marta K.</td>
-                    <td><strong>189 zł</strong></td>
+                    <td><span class="mobile-label">Klient: </span>Marta K.</td>
+                    <td><span class="mobile-label">Kwota: </span><strong>189 zł</strong></td>
                     <td><span class="status-badge status-active">Do wysyłki</span></td>
                 </tr>
                 <tr>
                     <td><strong>#HP-2468</strong></td>
-                    <td>Paweł S.</td>
-                    <td><strong>275 zł</strong></td>
+                    <td><span class="mobile-label">Klient: </span>Paweł S.</td>
+                    <td><span class="mobile-label">Kwota: </span><strong>275 zł</strong></td>
                     <td><span class="status-badge" style="background:#fff3e0;color:#e67e22">W realizacji</span></td>
                 </tr>
                 <tr>
                     <td><strong>#HP-2465</strong></td>
-                    <td>Anna W.</td>
-                    <td><strong>430 zł</strong></td>
+                    <td><span class="mobile-label">Klient: </span>Anna W.</td>
+                    <td><span class="mobile-label">Kwota: </span><strong>430 zł</strong></td>
                     <td><span class="status-badge status-draft">Wysłane</span></td>
                 </tr>
             </tbody>
@@ -1077,46 +1120,46 @@
             <tbody>
                 <tr>
                     <td><strong>#HP-2471</strong></td>
-                    <td>18.03.2026</td>
-                    <td>Marta K.</td>
+                    <td><span class="mobile-label">Data: </span>18.03.2026</td>
+                    <td><span class="mobile-label">Klient: </span>Marta K.</td>
                     <td>Ceramiczny wazon ręcznie toczony</td>
-                    <td><strong>189 zł</strong></td>
+                    <td><span class="mobile-label">Kwota: </span><strong>189 zł</strong></td>
                     <td><span class="status-badge status-active">Do wysyłki</span></td>
                     <td><button class="btn-outline btn-sm" onclick="showToast('Oznaczono jako wysłane')">Wyślij</button></td>
                 </tr>
                 <tr>
                     <td><strong>#HP-2468</strong></td>
-                    <td>17.03.2026</td>
-                    <td>Paweł S.</td>
+                    <td><span class="mobile-label">Data: </span>17.03.2026</td>
+                    <td><span class="mobile-label">Klient: </span>Paweł S.</td>
                     <td>Srebrny pierścionek z bursztynem</td>
-                    <td><strong>275 zł</strong></td>
+                    <td><span class="mobile-label">Kwota: </span><strong>275 zł</strong></td>
                     <td><span class="status-badge" style="background:#fff3e0;color:#e67e22">W realizacji</span></td>
                     <td><button class="btn-outline btn-sm" onclick="showToast('Oznaczono jako wysłane')">Wyślij</button></td>
                 </tr>
                 <tr>
                     <td><strong>#HP-2465</strong></td>
-                    <td>16.03.2026</td>
-                    <td>Anna W.</td>
+                    <td><span class="mobile-label">Data: </span>16.03.2026</td>
+                    <td><span class="mobile-label">Klient: </span>Anna W.</td>
                     <td>Skórzana torebka ręcznie szyta</td>
-                    <td><strong>430 zł</strong></td>
+                    <td><span class="mobile-label">Kwota: </span><strong>430 zł</strong></td>
                     <td><span class="status-badge status-draft">Wysłane</span></td>
                     <td><span style="color:var(--text-muted);font-size:0.8rem">—</span></td>
                 </tr>
                 <tr>
                     <td><strong>#HP-2460</strong></td>
-                    <td>15.03.2026</td>
-                    <td>Tomasz B.</td>
+                    <td><span class="mobile-label">Data: </span>15.03.2026</td>
+                    <td><span class="mobile-label">Klient: </span>Tomasz B.</td>
                     <td>Linoryt — widok na Tatry</td>
-                    <td><strong>210 zł</strong></td>
+                    <td><span class="mobile-label">Kwota: </span><strong>210 zł</strong></td>
                     <td><span class="status-badge status-draft">Wysłane</span></td>
                     <td><span style="color:var(--text-muted);font-size:0.8rem">—</span></td>
                 </tr>
                 <tr>
                     <td><strong>#HP-2453</strong></td>
-                    <td>13.03.2026</td>
-                    <td>Ewa M.</td>
+                    <td><span class="mobile-label">Data: </span>13.03.2026</td>
+                    <td><span class="mobile-label">Klient: </span>Ewa M.</td>
                     <td>Ceramiczny wazon ręcznie toczony</td>
-                    <td><strong>189 zł</strong></td>
+                    <td><span class="mobile-label">Kwota: </span><strong>189 zł</strong></td>
                     <td><span class="status-badge" style="background:#e8f5e9;color:#2e7d32">Dostarczono</span></td>
                     <td><span style="color:var(--text-muted);font-size:0.8rem">—</span></td>
                 </tr>
@@ -1493,8 +1536,8 @@ function renderListings() {
                 '<strong>' + l.name + '</strong>' +
             '</div></td>' +
             '<td><span class="status-badge status-' + l.status + '">' + statusLabel[l.status] + '</span></td>' +
-            '<td><strong>' + l.price + ' zł</strong></td>' +
-            '<td>' + l.sold + '</td>' +
+            '<td><span class="mobile-label">Cena: </span><strong>' + l.price + ' zł</strong></td>' +
+            '<td><span class="mobile-label">Sprzedaż: </span>' + l.sold + '</td>' +
             '<td><button class="btn-outline btn-sm" onclick="showToast(\'Edycja — wkrótce!\')">Edytuj</button></td>' +
         '</tr>';
     }).join('');
