@@ -13,8 +13,9 @@
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 16px 40px; background: #fffdf9; border-bottom: 1px solid #e0d5c7;
+            position: sticky; top: 0; z-index: 100;
         }
-        .logo { font-size: 1.4rem; font-weight: 700; color: #a0724a; letter-spacing: -0.5px; }
+        .logo { font-size: 1.4rem; font-weight: 700; color: #a0724a; letter-spacing: -0.5px; text-decoration: none; }
         .logo span { color: #3a3028; }
         .nav-links { display: flex; gap: 24px; align-items: center; }
         .nav-links a { text-decoration: none; color: #7a6e62; font-size: 0.9rem; }
@@ -24,6 +25,22 @@
             border-radius: 20px; font-size: 0.85rem; cursor: pointer; text-decoration: none;
         }
         .btn-sell:hover { background: #87603d; }
+
+        /* HAMBURGER */
+        .hamburger {
+            display: none; background: none; border: none; cursor: pointer;
+            width: 32px; height: 24px; position: relative; flex-shrink: 0;
+        }
+        .hamburger span {
+            display: block; position: absolute; left: 0; width: 100%; height: 2px;
+            background: #3a3028; border-radius: 2px; transition: all 0.3s;
+        }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+        .hamburger span:nth-child(3) { bottom: 0; }
+        .hamburger.active span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
 
         /* HERO */
         .hero {
@@ -135,9 +152,16 @@
 
         /* MOBILE */
         @media (max-width: 768px) {
-            nav { padding: 12px 16px; }
-            .nav-links { gap: 12px; }
-            .nav-links a:not(.btn-sell) { display: none; }
+            .hamburger { display: block; }
+            nav { padding: 12px 16px; flex-wrap: wrap; }
+            .nav-links {
+                display: none; flex-direction: column; width: 100%;
+                gap: 0; padding-top: 12px; border-top: 1px solid #e0d5c7; margin-top: 12px;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 10px 0; border-bottom: 1px solid #f0e8dc; }
+            .nav-links a:last-child { border-bottom: none; }
+            .nav-links .btn-sell { text-align: center; margin-top: 4px; }
 
             .hero {
                 flex-direction: column; gap: 24px;
@@ -171,8 +195,11 @@
 <body>
 
 <nav>
-    <div class="logo">Handmade<span>Poland</span></div>
-    <div class="nav-links">
+    <a href="#" class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">Handmade<span>Poland</span></a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
         <a href="#">Kategorie</a>
         <a href="#">Artyści</a>
         <a href="#">Jak to działa</a>
@@ -429,6 +456,11 @@
 </footer>
 
 <script>
+document.getElementById('hamburger').addEventListener('click', function() {
+    this.classList.toggle('active');
+    document.getElementById('navLinks').classList.toggle('open');
+});
+
 document.getElementById('catFilter').addEventListener('input', function() {
     var q = this.value.toLowerCase().trim();
     var groups = document.querySelectorAll('.cat-group');
