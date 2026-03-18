@@ -535,48 +535,233 @@
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
             .hamburger { display: block; }
+
+            /* topbar: compact, search below on mobile */
+            .topbar-inner { padding: 0 16px; height: 56px; gap: 10px; }
             .topbar-search { display: none; }
-            .nav-tabs { overflow-x: auto; padding: 0 16px; }
-            .nav-tab { padding: 12px 14px; font-size: 0.8rem; }
+            .topbar-actions .btn-primary { display: none; }
+            .topbar-actions { gap: 6px; }
+            .topbar-actions .icon-btn { width: 36px; height: 36px; }
 
-            .hero {
-                grid-template-columns: 1fr; padding: 32px 16px 24px;
-                text-align: center;
+            /* mobile search bar — visible below topbar */
+            .mobile-search {
+                display: block; padding: 8px 16px 10px;
+                background: var(--surface); border-bottom: 1px solid var(--border);
+                position: sticky; top: 56px; z-index: 199;
             }
-            .hero h1 { font-size: 1.8rem; }
-            .hero p { margin: 0 auto 20px; }
+            .mobile-search input {
+                width: 100%; padding: 10px 16px 10px 40px;
+                border: 1px solid var(--border); border-radius: 24px;
+                font-size: 0.9rem; background: var(--surface-alt); outline: none;
+            }
+            .mobile-search input:focus {
+                border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light);
+            }
+            .mobile-search { position: relative; }
+            .mobile-search svg {
+                position: absolute; left: 30px; top: 50%; transform: translateY(-50%);
+                width: 16px; height: 16px; color: var(--text-muted); pointer-events: none;
+            }
+
+            /* nav tabs handled in mobile-open toggle below */
+
+            /* hero */
+            .hero {
+                grid-template-columns: 1fr; padding: 28px 16px 20px;
+                text-align: center; gap: 20px;
+            }
+            .hero h1 { font-size: 1.7rem; letter-spacing: -0.5px; }
+            .hero p { font-size: 0.95rem; margin: 0 auto 20px; }
             .hero-actions { justify-content: center; }
-            .hero-mosaic { display: none; }
+            .hero-mosaic {
+                display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+            }
+            .hero-mosaic img:first-child { height: 160px; grid-row: span 2; }
+            .hero-mosaic img:nth-child(2) { height: 76px; }
+            .hero-mosaic img:nth-child(3) { height: 76px; }
 
-            .stats-strip { gap: 24px; padding: 24px 16px; flex-wrap: wrap; }
+            /* stats: 2×2 grid instead of row */
+            .stats-strip {
+                display: grid; grid-template-columns: 1fr 1fr;
+                gap: 0; padding: 0;
+            }
+            .stat {
+                padding: 16px 12px;
+                border-bottom: 1px solid var(--border);
+                border-right: 1px solid var(--border);
+            }
+            .stat:nth-child(2n) { border-right: none; }
+            .stat:nth-last-child(-n+2) { border-bottom: none; }
             .stat strong { font-size: 1.2rem; }
+            .stat span { font-size: 0.75rem; }
 
-            .cat-section, .products-section { padding-left: 16px; padding-right: 16px; }
-            .cat-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
-            .cat-chip { flex-shrink: 0; }
+            /* categories */
+            .cat-section { padding: 28px 16px; }
+            .products-section { padding: 0 16px 40px; }
+            .section-header { margin-bottom: 16px; }
+            .section-header h2 { font-size: 1.15rem; }
+            .cat-chips {
+                flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px;
+                -webkit-overflow-scrolling: touch; gap: 8px;
+                scrollbar-width: none;
+            }
+            .cat-chips::-webkit-scrollbar { display: none; }
+            .cat-chip { flex-shrink: 0; padding: 10px 14px; gap: 8px; }
+            .cat-chip-icon { font-size: 1.2rem; }
+            .cat-chip-text strong { font-size: 0.78rem; }
+            .cat-chip-text span { font-size: 0.68rem; }
 
-            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .card-body h3 { font-size: 0.8rem; }
-            .card-price { font-size: 0.9rem; }
+            /* categories page: chips wrap instead of scroll */
+            .cat-chips--wrap {
+                flex-wrap: wrap; overflow-x: visible;
+            }
+            .cat-chips--wrap .cat-chip {
+                flex: 1 1 calc(50% - 8px); min-width: 0;
+            }
+            .cat-chips--wrap .cat-chip-text strong {
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            }
 
+            /* product grid: 2 columns with compact cards */
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .card-img { aspect-ratio: 1; }
+            .card-body { padding: 10px 12px; }
+            .card-body h3 { font-size: 0.78rem; line-height: 1.3; }
+            .card-artisan { font-size: 0.68rem; margin-bottom: 6px; gap: 4px; }
+            .card-artisan img { width: 16px; height: 16px; }
+            .card-price { font-size: 0.85rem; }
+            .card-price small { font-size: 0.65rem; }
+            .card-add { width: 28px; height: 28px; }
+            .card-add svg { width: 14px; height: 14px; }
+            .card-badge { font-size: 0.58rem; padding: 3px 7px; top: 8px; left: 8px; }
+            .card-fav { width: 28px; height: 28px; top: 8px; right: 8px; }
+            .card-fav svg { width: 14px; height: 14px; }
+
+            /* modal: full screen on mobile */
+            .modal-overlay { padding: 0; align-items: flex-end; }
+            .modal {
+                max-height: 95vh; border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+                width: 100%; max-width: 100%;
+            }
             .modal-inner { grid-template-columns: 1fr; }
-            .modal-img { aspect-ratio: 16/9; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+            .modal-img {
+                aspect-ratio: 16/10;
+                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            }
+            .modal-content { padding: 20px 16px 24px; }
+            .modal-content h2 { font-size: 1.15rem; }
+            .modal-content .modal-desc { font-size: 0.85rem; }
+            .modal-price-row { flex-direction: column; gap: 12px; align-items: stretch; }
+            .modal-price { font-size: 1.3rem; }
+            .modal-price-row .btn-primary { text-align: center; }
 
-            .dash-stats { grid-template-columns: repeat(2, 1fr); }
+            /* cart panel: full width on small screens */
+            .cart-panel { width: 100vw; right: -100vw; }
+            .cart-panel.open { right: 0; }
+            .cart-header { padding: 16px; }
+            .cart-body { padding: 12px 16px; }
+            .cart-item img { width: 60px; height: 60px; }
+            .cart-footer { padding: 16px; }
+
+            /* dashboard */
+            .dash { padding: 20px 16px; }
+            .dash-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+            .dash-header h1 { font-size: 1.3rem; }
+            .dash-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .dash-stat { padding: 14px; }
+            .dash-stat strong { font-size: 1.2rem; }
+
+            /* listings: card layout instead of table on mobile */
+            .listings-table thead { display: none; }
+            .listings-table, .listings-table tbody,
+            .listings-table tr, .listings-table td {
+                display: block; width: 100%;
+            }
+            .listings-table tr {
+                padding: 14px 16px; border-bottom: 1px solid var(--border);
+                position: relative;
+            }
+            .listings-table td {
+                padding: 2px 0; border-bottom: none;
+            }
+            .listings-table td:nth-child(1) { font-weight: 600; margin-bottom: 6px; }
+            .listings-table td:nth-child(5) { margin-top: 8px; }
+            .listing-product { gap: 10px; }
+            .listing-product img { width: 40px; height: 40px; }
+
+            /* add product form */
+            .form-page { padding: 20px 16px; }
+            .form-page h1 { font-size: 1.2rem; }
             .form-grid { grid-template-columns: 1fr; }
             .form-group.full { grid-column: span 1; }
-            .listings-table { font-size: 0.8rem; }
-            .listings-table th, .listings-table td { padding: 10px 12px; }
+            .form-group input, .form-group textarea, .form-group select {
+                font-size: 16px; /* prevents iOS zoom */
+            }
+            .upload-zone { padding: 24px 16px; }
+            .form-actions { flex-direction: column; }
+            .form-actions button { width: 100%; text-align: center; }
 
-            .how-grid { grid-template-columns: 1fr; }
-            .cta-inner { flex-direction: column; text-align: center; gap: 20px; }
-            .footer-inner { grid-template-columns: 1fr 1fr; }
+            /* how it works */
+            .how-section { padding: 32px 16px; }
+            .how-section h2 { font-size: 1.2rem; margin-bottom: 24px; }
+            .how-grid { grid-template-columns: 1fr; gap: 12px; }
+            .how-card { padding: 24px 16px; }
+
+            /* cta */
+            .cta-banner { padding: 0 16px 40px; }
+            .cta-inner {
+                flex-direction: column; text-align: center; gap: 20px;
+                padding: 32px 20px;
+            }
+            .cta-inner h2 { font-size: 1.2rem; }
+            .cta-inner p { font-size: 0.85rem; }
+
+            /* footer */
+            .footer-inner {
+                grid-template-columns: 1fr 1fr; gap: 24px;
+                padding: 28px 16px 16px;
+            }
+            .footer-brand { grid-column: span 2; }
+            .footer-bottom { padding: 12px 16px; }
+
+            /* toast: centered on mobile */
+            .toast {
+                left: 16px; right: 16px; bottom: 16px;
+                text-align: center;
+            }
         }
-        @media (max-width: 480px) {
-            .grid { grid-template-columns: 1fr; }
-            .dash-stats { grid-template-columns: 1fr; }
+
+        @media (max-width: 380px) {
+            .hero h1 { font-size: 1.45rem; }
+            .hero-mosaic { display: none; }
+            .btn-primary { padding: 10px 18px; font-size: 0.8rem; }
+            .btn-outline { padding: 10px 18px; font-size: 0.8rem; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .card-body { padding: 8px 10px; }
+            .card-body h3 { font-size: 0.72rem; }
             .footer-inner { grid-template-columns: 1fr; }
+            .footer-brand { grid-column: span 1; }
+            .dash-stats { grid-template-columns: 1fr; }
+            .cat-chips--wrap .cat-chip { flex: 1 1 100%; }
         }
+
+        /* mobile nav toggle */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                display: none; flex-direction: column;
+                border-bottom: none;
+                background: var(--surface); border-bottom: 1px solid var(--border);
+            }
+            .nav-tabs.mobile-open { display: flex; }
+            .nav-tab {
+                border-bottom: none; border-left: 3px solid transparent;
+                text-align: left; padding: 14px 20px;
+            }
+            .nav-tab.active { border-left-color: var(--accent); border-bottom: none; }
+        }
+
+        /* desktop: hide mobile search */
+        .mobile-search { display: none; }
     </style>
 </head>
 <body>
@@ -601,6 +786,12 @@
             <button class="btn-primary btn-sm" onclick="navigate('add-product')">+ Dodaj produkt</button>
         </div>
     </div>
+</div>
+
+<!-- ═══ MOBILE SEARCH ═══ -->
+<div class="mobile-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" placeholder="Szukaj produktów..." id="mobileSearch">
 </div>
 
 <!-- ═══ NAV TABS ═══ -->
@@ -699,7 +890,7 @@
 <div class="page" id="page-categories">
     <div class="cat-section">
         <h2 style="font-size:1.6rem;margin-bottom:24px">Wszystkie kategorie</h2>
-        <div class="cat-chips" id="catChipsFull" style="margin-bottom:32px"></div>
+        <div class="cat-chips cat-chips--wrap" id="catChipsFull" style="margin-bottom:32px"></div>
         <div class="grid" id="catProductGrid"></div>
     </div>
 </div>
@@ -989,7 +1180,12 @@ function navigate(page) {
 }
 
 document.querySelectorAll('.nav-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() { navigate(this.dataset.page); });
+    tab.addEventListener('click', function() {
+        navigate(this.dataset.page);
+        // close mobile menu
+        document.getElementById('navTabs').classList.remove('mobile-open');
+        document.getElementById('hamburger').classList.remove('active');
+    });
 });
 
 // ─── RENDER PRODUCTS ───
@@ -1148,8 +1344,8 @@ function handleAddProduct(e, isDraft) {
 }
 
 // ─── SEARCH ───
-document.getElementById('globalSearch').addEventListener('input', function() {
-    var q = this.value.toLowerCase().trim();
+function handleSearch(q) {
+    q = q.toLowerCase().trim();
     if (!q) { filterCat('all'); return; }
     var results = products.filter(function(p) {
         return p.name.toLowerCase().indexOf(q) !== -1 ||
@@ -1159,6 +1355,14 @@ document.getElementById('globalSearch').addEventListener('input', function() {
     });
     renderProducts('productGrid', results);
     navigate('home');
+}
+document.getElementById('globalSearch').addEventListener('input', function() {
+    handleSearch(this.value);
+    document.getElementById('mobileSearch').value = this.value;
+});
+document.getElementById('mobileSearch').addEventListener('input', function() {
+    handleSearch(this.value);
+    document.getElementById('globalSearch').value = this.value;
 });
 
 // ─── TOAST ───
@@ -1173,8 +1377,8 @@ function showToast(msg) {
 // ─── HAMBURGER ───
 document.getElementById('hamburger').addEventListener('click', function() {
     this.classList.toggle('active');
-    document.getElementById('navTabs').style.display =
-        document.getElementById('navTabs').style.display === 'flex' ? '' : 'flex';
+    var tabs = document.getElementById('navTabs');
+    tabs.classList.toggle('mobile-open');
 });
 
 // ─── INIT ───
