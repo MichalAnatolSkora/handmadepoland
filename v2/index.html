@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Handmade Poland — Rękodzieło z Polski</title>
+    <style>
+        :root {
+            --bg: #faf9f7;
+            --surface: #ffffff;
+            --surface-alt: #f5f3f0;
+            --border: #e8e5e1;
+            --border-light: #f0ede9;
+            --text: #1a1816;
+            --text-secondary: #6b6560;
+            --text-muted: #9e9891;
+            --accent: #c8956c;
+            --accent-dark: #a87750;
+            --accent-light: #f5ece3;
+            --success: #4a9e6b;
+            --danger: #c75c5c;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.1);
+            --transition: 0.2s ease;
+            --max-w: 1200px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+            color: var(--text); background: var(--bg);
+            line-height: 1.5; -webkit-font-smoothing: antialiased;
+        }
+        img { display: block; max-width: 100%; }
+        button { cursor: pointer; font-family: inherit; }
+        input, textarea, select { font-family: inherit; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ─── TOPBAR ─── */
+        .topbar {
+            position: sticky; top: 0; z-index: 200;
+            background: var(--surface); border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px); background: rgba(255,255,255,0.92);
+        }
+        .topbar-inner {
+            max-width: var(--max-w); margin: 0 auto;
+            display: flex; align-items: center; gap: 16px;
+            padding: 0 24px; height: 60px;
+        }
+        .logo {
+            font-size: 1.2rem; font-weight: 700; letter-spacing: -0.5px;
+            color: var(--text); flex-shrink: 0;
+        }
+        .logo em { font-style: normal; color: var(--accent); }
+
+        .topbar-search {
+            flex: 1; max-width: 480px; position: relative; margin: 0 auto;
+        }
+        .topbar-search input {
+            width: 100%; padding: 10px 16px 10px 40px;
+            border: 1px solid var(--border); border-radius: 24px;
+            font-size: 0.9rem; background: var(--surface-alt);
+            outline: none; transition: var(--transition);
+        }
+        .topbar-search input:focus {
+            border-color: var(--accent); background: var(--surface);
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+        .topbar-search svg {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            width: 16px; height: 16px; color: var(--text-muted); pointer-events: none;
+        }
+
+        .topbar-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .topbar-actions .icon-btn {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid var(--border); background: var(--surface);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); transition: var(--transition);
+            position: relative;
+        }
+        .topbar-actions .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .icon-btn svg { width: 18px; height: 18px; }
+        .cart-count {
+            position: absolute; top: -4px; right: -4px;
+            background: var(--accent); color: #fff;
+            font-size: 0.65rem; font-weight: 700;
+            width: 18px; height: 18px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            display: none;
+        }
+        .cart-count.show { display: flex; }
+
+        .btn-primary {
+            background: var(--accent); color: #fff; border: none;
+            padding: 10px 22px; border-radius: 24px;
+            font-size: 0.85rem; font-weight: 600;
+            transition: var(--transition);
+        }
+        .btn-primary:hover { background: var(--accent-dark); }
+        .btn-outline {
+            background: transparent; color: var(--text);
+            border: 1px solid var(--border);
+            padding: 10px 22px; border-radius: 24px;
+            font-size: 0.85rem; font-weight: 500;
+            transition: var(--transition);
+        }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-sm { padding: 7px 16px; font-size: 0.8rem; }
+        .btn-danger { background: var(--danger); color: #fff; border: none; padding: 7px 16px; border-radius: 24px; font-size: 0.8rem; font-weight: 500; }
+        .btn-danger:hover { opacity: 0.9; }
+
+        /* hamburger */
+        .hamburger {
+            display: none; background: none; border: none;
+            width: 28px; height: 20px; position: relative; flex-shrink: 0;
+        }
+        .hamburger span {
+            display: block; position: absolute; left: 0; width: 100%; height: 2px;
+            background: var(--text); border-radius: 2px; transition: 0.3s;
+        }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+        .hamburger span:nth-child(3) { bottom: 0; }
+        .hamburger.active span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+        /* ─── NAV TABS ─── */
+        .nav-tabs {
+            max-width: var(--max-w); margin: 0 auto;
+            display: flex; gap: 0; padding: 0 24px;
+            border-bottom: 1px solid var(--border); background: var(--surface);
+        }
+        .nav-tab {
+            padding: 12px 20px; font-size: 0.85rem; font-weight: 500;
+            color: var(--text-secondary); background: none; border: none;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition); white-space: nowrap;
+        }
+        .nav-tab:hover { color: var(--text); }
+        .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+        /* ─── PAGES ─── */
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.25s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ─── HOME ─── */
+        .hero {
+            max-width: var(--max-w); margin: 0 auto;
+            padding: 56px 24px 40px;
+            display: grid; grid-template-columns: 1fr 420px; gap: 48px; align-items: center;
+        }
+        .hero h1 {
+            font-size: 2.8rem; font-weight: 800; letter-spacing: -1px;
+            line-height: 1.1; margin-bottom: 16px;
+        }
+        .hero h1 em { font-style: normal; color: var(--accent); }
+        .hero p {
+            font-size: 1.1rem; color: var(--text-secondary);
+            max-width: 460px; margin-bottom: 28px;
+        }
+        .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hero-mosaic {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+        }
+        .hero-mosaic img {
+            width: 100%; border-radius: var(--radius);
+            object-fit: cover;
+        }
+        .hero-mosaic img:first-child { height: 280px; grid-row: span 2; }
+        .hero-mosaic img:nth-child(2) { height: 134px; }
+        .hero-mosaic img:nth-child(3) { height: 134px; }
+
+        /* stats strip */
+        .stats-strip {
+            max-width: var(--max-w); margin: 0 auto;
+            display: flex; justify-content: center; gap: 48px;
+            padding: 32px 24px; border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border); background: var(--surface);
+        }
+        .stat { text-align: center; }
+        .stat strong { display: block; font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+        .stat span { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* category chips */
+        .cat-section {
+            max-width: var(--max-w); margin: 0 auto; padding: 48px 24px;
+        }
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 24px;
+        }
+        .section-header h2 { font-size: 1.4rem; font-weight: 700; }
+        .section-header a {
+            font-size: 0.85rem; color: var(--accent); font-weight: 500;
+        }
+        .cat-chips {
+            display: flex; gap: 12px; flex-wrap: wrap;
+        }
+        .cat-chip {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 20px; background: var(--surface);
+            border: 1px solid var(--border); border-radius: var(--radius);
+            cursor: pointer; transition: var(--transition);
+        }
+        .cat-chip:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
+        .cat-chip.active { border-color: var(--accent); background: var(--accent-light); }
+        .cat-chip-icon { font-size: 1.5rem; }
+        .cat-chip-text strong { display: block; font-size: 0.85rem; font-weight: 600; }
+        .cat-chip-text span { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* ─── PRODUCT GRID ─── */
+        .products-section {
+            max-width: var(--max-w); margin: 0 auto; padding: 0 24px 64px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--surface); border-radius: var(--radius);
+            border: 1px solid var(--border); overflow: hidden;
+            transition: var(--transition); cursor: pointer;
+        }
+        .card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+        .card-img {
+            position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--surface-alt);
+        }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .card:hover .card-img img { transform: scale(1.04); }
+        .card-badge {
+            position: absolute; top: 10px; left: 10px;
+            background: var(--surface); color: var(--accent);
+            font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+            padding: 4px 10px; border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+        .card-fav {
+            position: absolute; top: 10px; right: 10px;
+            width: 32px; height: 32px; border-radius: 50%;
+            background: rgba(255,255,255,0.9); border: none;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: var(--transition);
+        }
+        .card-fav:hover { background: #fff; transform: scale(1.1); }
+        .card-fav svg { width: 16px; height: 16px; color: var(--text-muted); }
+        .card-fav.liked svg { color: var(--danger); fill: var(--danger); }
+        .card-body { padding: 14px 16px; }
+        .card-body h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+        .card-artisan {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px;
+        }
+        .card-artisan img {
+            width: 20px; height: 20px; border-radius: 50%; object-fit: cover;
+        }
+        .card-footer {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .card-price { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+        .card-price small { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); }
+        .card-add {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: var(--accent); border: none; color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .card-add:hover { background: var(--accent-dark); transform: scale(1.1); }
+        .card-add svg { width: 16px; height: 16px; }
+
+        /* ─── PRODUCT DETAIL MODAL ─── */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; z-index: 500;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+            align-items: center; justify-content: center; padding: 24px;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: var(--surface); border-radius: var(--radius-lg);
+            max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto;
+            box-shadow: var(--shadow-lg); animation: modalIn 0.25s ease;
+        }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+        .modal-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255,255,255,0.9); border: none;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 10;
+        }
+        .modal-inner { display: grid; grid-template-columns: 1fr 1fr; }
+        .modal-img { aspect-ratio: 1; overflow: hidden; border-radius: var(--radius-lg) 0 0 var(--radius-lg); }
+        .modal-img img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-content { padding: 32px; position: relative; display: flex; flex-direction: column; }
+        .modal-content h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+        .modal-content .modal-artisan {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px;
+        }
+        .modal-content .modal-artisan img {
+            width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
+        }
+        .modal-content .modal-desc {
+            font-size: 0.9rem; color: var(--text-secondary);
+            line-height: 1.6; margin-bottom: 24px; flex: 1;
+        }
+        .modal-price-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 20px; border-top: 1px solid var(--border);
+        }
+        .modal-price { font-size: 1.6rem; font-weight: 800; }
+        .modal-price small { font-size: 0.8rem; font-weight: 400; color: var(--text-muted); display: block; }
+
+        /* ─── CART SLIDE ─── */
+        .cart-overlay {
+            display: none; position: fixed; inset: 0; z-index: 400;
+            background: rgba(0,0,0,0.4);
+        }
+        .cart-overlay.open { display: block; }
+        .cart-panel {
+            position: fixed; top: 0; right: -420px; bottom: 0;
+            width: 400px; max-width: 100vw; z-index: 401;
+            background: var(--surface); box-shadow: var(--shadow-lg);
+            display: flex; flex-direction: column;
+            transition: right 0.3s ease;
+        }
+        .cart-panel.open { right: 0; }
+        .cart-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 24px; border-bottom: 1px solid var(--border);
+        }
+        .cart-header h3 { font-size: 1.1rem; font-weight: 700; }
+        .cart-body { flex: 1; overflow-y: auto; padding: 16px 24px; }
+        .cart-empty {
+            text-align: center; padding: 48px 0; color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .cart-empty svg { width: 48px; height: 48px; margin-bottom: 12px; color: var(--border); }
+        .cart-item {
+            display: flex; gap: 14px; padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cart-item img {
+            width: 72px; height: 72px; border-radius: var(--radius-sm);
+            object-fit: cover; flex-shrink: 0;
+        }
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-info h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; }
+        .cart-item-info .ci-artisan { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; }
+        .cart-item-info .ci-price { font-weight: 700; font-size: 0.9rem; }
+        .cart-item-remove {
+            background: none; border: none; color: var(--text-muted);
+            font-size: 0.75rem; padding: 4px; align-self: flex-start;
+        }
+        .cart-item-remove:hover { color: var(--danger); }
+        .cart-footer {
+            padding: 20px 24px; border-top: 1px solid var(--border);
+        }
+        .cart-total {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+        }
+        .cart-total span { font-size: 0.9rem; color: var(--text-secondary); }
+        .cart-total strong { font-size: 1.2rem; font-weight: 800; }
+        .cart-footer .btn-primary { width: 100%; text-align: center; display: block; }
+
+        /* ─── SELLER DASHBOARD ─── */
+        .dash {
+            max-width: var(--max-w); margin: 0 auto; padding: 32px 24px;
+        }
+        .dash-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 32px;
+        }
+        .dash-header h1 { font-size: 1.6rem; font-weight: 700; }
+        .dash-stats {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+            margin-bottom: 36px;
+        }
+        .dash-stat {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 20px;
+        }
+        .dash-stat span { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px; }
+        .dash-stat strong { font-size: 1.5rem; font-weight: 800; }
+        .dash-stat small { font-size: 0.75rem; color: var(--success); }
+
+        .dash-section-title {
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;
+        }
+        .listings-table {
+            width: 100%; background: var(--surface);
+            border: 1px solid var(--border); border-radius: var(--radius);
+            overflow: hidden; border-spacing: 0;
+        }
+        .listings-table th {
+            text-align: left; padding: 12px 16px;
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+            color: var(--text-muted); background: var(--surface-alt);
+            border-bottom: 1px solid var(--border);
+        }
+        .listings-table td {
+            padding: 14px 16px; font-size: 0.85rem;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
+        }
+        .listings-table tr:last-child td { border-bottom: none; }
+        .listing-product {
+            display: flex; align-items: center; gap: 12px;
+        }
+        .listing-product img {
+            width: 44px; height: 44px; border-radius: var(--radius-sm);
+            object-fit: cover;
+        }
+        .listing-product strong { font-weight: 600; }
+        .status-badge {
+            display: inline-block; padding: 3px 10px; border-radius: 20px;
+            font-size: 0.72rem; font-weight: 600;
+        }
+        .status-active { background: #e6f4ec; color: var(--success); }
+        .status-draft { background: #f0ede9; color: var(--text-muted); }
+        .status-sold { background: #fce8e8; color: var(--danger); }
+
+        /* ─── ADD PRODUCT FORM ─── */
+        .form-page {
+            max-width: 720px; margin: 0 auto; padding: 32px 24px;
+        }
+        .form-page h1 { font-size: 1.4rem; font-weight: 700; margin-bottom: 24px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group.full { grid-column: span 2; }
+        .form-group label {
+            display: block; font-size: 0.8rem; font-weight: 600;
+            color: var(--text-secondary); margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%; padding: 10px 14px; border: 1px solid var(--border);
+            border-radius: var(--radius-sm); font-size: 0.9rem;
+            outline: none; background: var(--surface); transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light);
+        }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .upload-zone {
+            border: 2px dashed var(--border); border-radius: var(--radius);
+            padding: 32px; text-align: center; cursor: pointer;
+            transition: var(--transition); color: var(--text-muted);
+        }
+        .upload-zone:hover { border-color: var(--accent); background: var(--accent-light); }
+        .upload-zone svg { width: 32px; height: 32px; margin-bottom: 8px; }
+        .upload-zone p { font-size: 0.85rem; }
+        .form-actions {
+            display: flex; gap: 12px; justify-content: flex-end;
+            padding-top: 16px; border-top: 1px solid var(--border);
+        }
+
+        /* ─── HOW IT WORKS ─── */
+        .how-section {
+            max-width: var(--max-w); margin: 0 auto; padding: 56px 24px;
+        }
+        .how-section h2 { text-align: center; font-size: 1.4rem; font-weight: 700; margin-bottom: 40px; }
+        .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+        .how-card {
+            text-align: center; padding: 32px 24px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+        .how-icon {
+            width: 56px; height: 56px; border-radius: 50%;
+            background: var(--accent-light); color: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px; font-size: 1.5rem;
+        }
+        .how-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+        .how-card p { font-size: 0.85rem; color: var(--text-secondary); }
+
+        /* CTA banner */
+        .cta-banner {
+            max-width: var(--max-w); margin: 0 auto; padding: 0 24px 64px;
+        }
+        .cta-inner {
+            background: linear-gradient(135deg, #3a3028 0%, #5a4a3a 100%);
+            border-radius: var(--radius-lg); padding: 48px;
+            display: flex; align-items: center; justify-content: space-between;
+            color: #fff;
+        }
+        .cta-inner h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+        .cta-inner p { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+        .cta-inner .btn-primary { background: var(--accent); padding: 14px 32px; font-size: 0.95rem; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border); background: var(--surface);
+        }
+        .footer-inner {
+            max-width: var(--max-w); margin: 0 auto; padding: 40px 24px 24px;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px;
+        }
+        .footer-brand p { font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; max-width: 260px; }
+        .footer-col h4 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+        .footer-col a { display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px; }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-bottom {
+            max-width: var(--max-w); margin: 0 auto; padding: 16px 24px;
+            border-top: 1px solid var(--border); text-align: center;
+            font-size: 0.75rem; color: var(--text-muted);
+        }
+        .footer-bottom a { color: var(--text-secondary); }
+
+        /* ─── TOAST ─── */
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; z-index: 600;
+            background: var(--text); color: #fff;
+            padding: 12px 20px; border-radius: var(--radius);
+            font-size: 0.85rem; font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(80px); opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .topbar-search { display: none; }
+            .nav-tabs { overflow-x: auto; padding: 0 16px; }
+            .nav-tab { padding: 12px 14px; font-size: 0.8rem; }
+
+            .hero {
+                grid-template-columns: 1fr; padding: 32px 16px 24px;
+                text-align: center;
+            }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { margin: 0 auto 20px; }
+            .hero-actions { justify-content: center; }
+            .hero-mosaic { display: none; }
+
+            .stats-strip { gap: 24px; padding: 24px 16px; flex-wrap: wrap; }
+            .stat strong { font-size: 1.2rem; }
+
+            .cat-section, .products-section { padding-left: 16px; padding-right: 16px; }
+            .cat-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
+            .cat-chip { flex-shrink: 0; }
+
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .card-body h3 { font-size: 0.8rem; }
+            .card-price { font-size: 0.9rem; }
+
+            .modal-inner { grid-template-columns: 1fr; }
+            .modal-img { aspect-ratio: 16/9; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+
+            .dash-stats { grid-template-columns: repeat(2, 1fr); }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: span 1; }
+            .listings-table { font-size: 0.8rem; }
+            .listings-table th, .listings-table td { padding: 10px 12px; }
+
+            .how-grid { grid-template-columns: 1fr; }
+            .cta-inner { flex-direction: column; text-align: center; gap: 20px; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .grid { grid-template-columns: 1fr; }
+            .dash-stats { grid-template-columns: 1fr; }
+            .footer-inner { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ TOPBAR ═══ -->
+<div class="topbar">
+    <div class="topbar-inner">
+        <a href="#" class="logo" onclick="navigate('home');return false">Handmade<em>Poland</em></a>
+        <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+        <div class="topbar-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" placeholder="Szukaj produktów, artystów, kategorii..." id="globalSearch">
+        </div>
+        <div class="topbar-actions">
+            <button class="icon-btn" title="Ulubione" onclick="showToast('Ulubione — wkrótce!')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <button class="icon-btn" id="cartBtn" onclick="toggleCart()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+            <button class="btn-primary btn-sm" onclick="navigate('add-product')">+ Dodaj produkt</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ NAV TABS ═══ -->
+<div class="nav-tabs" id="navTabs">
+    <button class="nav-tab active" data-page="home">Odkrywaj</button>
+    <button class="nav-tab" data-page="categories">Kategorie</button>
+    <button class="nav-tab" data-page="how">Jak to działa</button>
+    <button class="nav-tab" data-page="dashboard">Panel sprzedawcy</button>
+</div>
+
+<!-- ═══ PAGE: HOME ═══ -->
+<div class="page active" id="page-home">
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Odkrywaj unikalne<br><em>rękodzieło</em> z Polski</h1>
+            <p>Platforma łącząca polskich rzemieślników z miłośnikami rzeczy tworzonych ręcznie. Bez opłat za wystawienie — zarabiamy tylko gdy Ty zarabiasz.</p>
+            <div class="hero-actions">
+                <button class="btn-primary" onclick="navigate('categories')">Przeglądaj produkty</button>
+                <button class="btn-outline" onclick="navigate('how')">Jak to działa?</button>
+            </div>
+        </div>
+        <div class="hero-mosaic">
+            <img src="https://images.pexels.com/photos/17846717/pexels-photo-17846717.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop" alt="Ceramika" loading="lazy">
+            <img src="https://images.pexels.com/photos/18289011/pexels-photo-18289011.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop" alt="Drewno" loading="lazy">
+            <img src="https://images.pexels.com/photos/1352783/pexels-photo-1352783.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop" alt="Biżuteria" loading="lazy">
+        </div>
+    </div>
+
+    <div class="stats-strip">
+        <div class="stat"><strong>2 400+</strong><span>Produktów</span></div>
+        <div class="stat"><strong>380+</strong><span>Artystów</span></div>
+        <div class="stat"><strong>16</strong><span>Województw</span></div>
+        <div class="stat"><strong>98%</strong><span>Zadowolonych klientów</span></div>
+    </div>
+
+    <div class="cat-section">
+        <div class="section-header">
+            <h2>Przeglądaj kategorie</h2>
+            <a href="#" onclick="navigate('categories');return false">Wszystkie &rarr;</a>
+        </div>
+        <div class="cat-chips" id="catChips">
+            <div class="cat-chip active" data-cat="all" onclick="filterCat('all')">
+                <div class="cat-chip-icon">✨</div>
+                <div class="cat-chip-text"><strong>Wszystko</strong><span>2 400 produktów</span></div>
+            </div>
+            <div class="cat-chip" data-cat="ceramika" onclick="filterCat('ceramika')">
+                <div class="cat-chip-icon">🏺</div>
+                <div class="cat-chip-text"><strong>Ceramika i szkło</strong><span>556 produktów</span></div>
+            </div>
+            <div class="cat-chip" data-cat="drewno" onclick="filterCat('drewno')">
+                <div class="cat-chip-icon">🪵</div>
+                <div class="cat-chip-text"><strong>Drewno i wiklina</strong><span>254 produkty</span></div>
+            </div>
+            <div class="cat-chip" data-cat="bizuteria" onclick="filterCat('bizuteria')">
+                <div class="cat-chip-icon">💎</div>
+                <div class="cat-chip-text"><strong>Biżuteria</strong><span>688 produktów</span></div>
+            </div>
+            <div class="cat-chip" data-cat="tekstylia" onclick="filterCat('tekstylia')">
+                <div class="cat-chip-icon">🧶</div>
+                <div class="cat-chip-text"><strong>Tekstylia i skóra</strong><span>289 produktów</span></div>
+            </div>
+            <div class="cat-chip" data-cat="kosmetyki" onclick="filterCat('kosmetyki')">
+                <div class="cat-chip-icon">🕯️</div>
+                <div class="cat-chip-text"><strong>Kosmetyki i świece</strong><span>178 produktów</span></div>
+            </div>
+            <div class="cat-chip" data-cat="sztuka" onclick="filterCat('sztuka')">
+                <div class="cat-chip-icon">🎨</div>
+                <div class="cat-chip-text"><strong>Sztuka i grafika</strong><span>312 produktów</span></div>
+            </div>
+            <div class="cat-chip" data-cat="metal" onclick="filterCat('metal')">
+                <div class="cat-chip-icon">⚒️</div>
+                <div class="cat-chip-text"><strong>Kowalstwo i metal</strong><span>123 produkty</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="products-section">
+        <div class="section-header">
+            <h2>Polecane produkty</h2>
+        </div>
+        <div class="grid" id="productGrid"></div>
+    </div>
+
+    <div class="cta-banner">
+        <div class="cta-inner">
+            <div>
+                <h2>Tworzysz rzeczy ręcznie? Zacznij sprzedawać.</h2>
+                <p>Darmowe wystawianie, prowizja tylko od sprzedaży. Dołącz do 380+ polskich artystów.</p>
+            </div>
+            <button class="btn-primary" onclick="navigate('add-product')">Wystaw pierwszy produkt</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ PAGE: CATEGORIES ═══ -->
+<div class="page" id="page-categories">
+    <div class="cat-section">
+        <h2 style="font-size:1.6rem;margin-bottom:24px">Wszystkie kategorie</h2>
+        <div class="cat-chips" id="catChipsFull" style="margin-bottom:32px"></div>
+        <div class="grid" id="catProductGrid"></div>
+    </div>
+</div>
+
+<!-- ═══ PAGE: HOW IT WORKS ═══ -->
+<div class="page" id="page-how">
+    <div class="how-section">
+        <h2>Jak działa Handmade Poland?</h2>
+        <div class="how-grid">
+            <div class="how-card">
+                <div class="how-icon">📸</div>
+                <h3>Wystaw produkt</h3>
+                <p>Dodaj zdjęcia, opis i cenę. Wystawianie jest całkowicie bezpłatne — zero opłat za samo dodanie.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-icon">🛍️</div>
+                <h3>Klient kupuje</h3>
+                <p>Twoje produkty trafiają do klientów szukających wyjątkowego rękodzieła z Polski.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-icon">💰</div>
+                <h3>Zarabiasz</h3>
+                <p>Otrzymujesz pieniądze za sprzedaż. My pobieramy tylko niewielką prowizję od transakcji.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="how-section" style="padding-top:0">
+        <h2>Dla kupującego</h2>
+        <div class="how-grid">
+            <div class="how-card">
+                <div class="how-icon">🔍</div>
+                <h3>Odkrywaj</h3>
+                <p>Przeglądaj tysiące unikalnych, ręcznie robionych produktów od polskich artystów.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-icon">🤝</div>
+                <h3>Kupuj bezpośrednio</h3>
+                <p>Każdy zakup wspiera niezależnego rzemieślnika. Znasz twórcę, znasz historię.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-icon">📦</div>
+                <h3>Dostawa do domu</h3>
+                <p>Bezpieczna przesyłka ubezpieczona. Śledzenie zamówienia w czasie rzeczywistym.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-banner">
+        <div class="cta-inner">
+            <div>
+                <h2>Gotowy, żeby zacząć?</h2>
+                <p>Nie czekaj — Twoje rękodzieło zasługuje na widoczność.</p>
+            </div>
+            <button class="btn-primary" onclick="navigate('add-product')">Dodaj produkt za darmo</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ PAGE: DASHBOARD ═══ -->
+<div class="page" id="page-dashboard">
+    <div class="dash">
+        <div class="dash-header">
+            <h1>Panel sprzedawcy</h1>
+            <button class="btn-primary" onclick="navigate('add-product')">+ Nowy produkt</button>
+        </div>
+        <div class="dash-stats">
+            <div class="dash-stat">
+                <span>Przychód (marzec)</span>
+                <strong>4 280 zł</strong>
+                <small>+12% vs luty</small>
+            </div>
+            <div class="dash-stat">
+                <span>Zamówienia</span>
+                <strong>23</strong>
+                <small>+3 w tym tygodniu</small>
+            </div>
+            <div class="dash-stat">
+                <span>Wyświetlenia</span>
+                <strong>1 892</strong>
+                <small>+8% vs luty</small>
+            </div>
+            <div class="dash-stat">
+                <span>Aktywne oferty</span>
+                <strong>12</strong>
+            </div>
+        </div>
+
+        <h3 class="dash-section-title">Twoje produkty</h3>
+        <table class="listings-table" id="listingsTable">
+            <thead>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Status</th>
+                    <th>Cena</th>
+                    <th>Sprzedaż</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody id="listingsBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ═══ PAGE: ADD PRODUCT ═══ -->
+<div class="page" id="page-add-product">
+    <div class="form-page">
+        <h1>Dodaj nowy produkt</h1>
+        <form id="addProductForm" onsubmit="handleAddProduct(event)">
+            <div class="form-group full">
+                <label>Zdjęcia</label>
+                <div class="upload-zone" onclick="showToast('Upload zdjęć — wkrótce!')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <p>Kliknij lub przeciągnij zdjęcia tutaj</p>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label>Nazwa produktu</label>
+                    <input type="text" id="prodName" placeholder="np. Ceramiczny wazon ręcznie toczony" required>
+                </div>
+                <div class="form-group">
+                    <label>Kategoria</label>
+                    <select id="prodCat" required>
+                        <option value="">Wybierz kategorię</option>
+                        <option value="ceramika">Ceramika i szkło</option>
+                        <option value="drewno">Drewno i wiklina</option>
+                        <option value="bizuteria">Biżuteria</option>
+                        <option value="tekstylia">Tekstylia i skóra</option>
+                        <option value="kosmetyki">Kosmetyki i świece</option>
+                        <option value="sztuka">Sztuka i grafika</option>
+                        <option value="metal">Kowalstwo i metal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Cena (zł)</label>
+                    <input type="number" id="prodPrice" placeholder="0.00" min="1" step="0.01" required>
+                </div>
+                <div class="form-group full">
+                    <label>Opis</label>
+                    <textarea id="prodDesc" placeholder="Opisz swój produkt — materiały, technika, wymiary..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Lokalizacja</label>
+                    <input type="text" id="prodLocation" placeholder="np. Bolesławiec">
+                </div>
+                <div class="form-group">
+                    <label>Czas realizacji</label>
+                    <select id="prodTime">
+                        <option value="1-3">1–3 dni robocze</option>
+                        <option value="3-7">3–7 dni roboczych</option>
+                        <option value="7-14">7–14 dni roboczych</option>
+                        <option value="custom">Na zamówienie</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn-outline" onclick="navigate('dashboard')">Anuluj</button>
+                <button type="button" class="btn-outline" onclick="handleAddProduct(event, true)">Zapisz jako szkic</button>
+                <button type="submit" class="btn-primary">Opublikuj produkt</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ═══ PRODUCT MODAL ═══ -->
+<div class="modal-overlay" id="productModal" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+        <div class="modal-inner">
+            <div class="modal-img"><img id="modalImg" src="" alt=""></div>
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+                <h2 id="modalTitle"></h2>
+                <div class="modal-artisan" id="modalArtisan"></div>
+                <div class="modal-desc" id="modalDesc"></div>
+                <div class="modal-price-row">
+                    <div class="modal-price" id="modalPrice"></div>
+                    <button class="btn-primary" id="modalAddBtn">Dodaj do koszyka</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ CART PANEL ═══ -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+        <h3>Koszyk <span id="cartItemCount"></span></h3>
+        <button class="icon-btn" onclick="toggleCart()" style="border:none;width:auto;height:auto">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+    <div class="cart-body" id="cartBody"></div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+        <div class="cart-total">
+            <span>Suma</span>
+            <strong id="cartTotal">0 zł</strong>
+        </div>
+        <button class="btn-primary" onclick="showToast('Checkout — wkrótce!')">Przejdź do kasy</button>
+    </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <div class="logo" style="font-size:1.1rem">Handmade<em>Poland</em></div>
+            <p>Platforma dla polskich rzemieślników i miłośników rękodzieła. Darmowe wystawianie, prowizja tylko od sprzedaży.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Kupujący</h4>
+            <a href="#">Jak kupować</a>
+            <a href="#">Kategorie</a>
+            <a href="#">Zwroty</a>
+            <a href="#">FAQ</a>
+        </div>
+        <div class="footer-col">
+            <h4>Sprzedawcy</h4>
+            <a href="#">Zacznij sprzedawać</a>
+            <a href="#">Panel sprzedawcy</a>
+            <a href="#">Prowizje</a>
+            <a href="#">Poradnik</a>
+        </div>
+        <div class="footer-col">
+            <h4>Firma</h4>
+            <a href="#">O nas</a>
+            <a href="#">Kontakt</a>
+            <a href="#">Regulamin</a>
+            <a href="#">Polityka prywatności</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 Handmade Poland. Wszystkie prawa zastrzeżone. &middot;
+        <a href="../index.html">Wersje strony</a>
+    </div>
+</footer>
+
+<script>
+// ─── DATA ───
+var products = [
+    { id:1, name:"Ceramiczny wazon ręcznie toczony", artisan:"Anna Kowalska", city:"Bolesławiec", price:189, cat:"ceramika", img:"https://images.pexels.com/photos/357428/pexels-photo-357428.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Wazon wykonany na kole garncarskim z lokalnej gliny. Pokryty unikalnym szkliwem w odcieniach błękitu. Wysokość 28 cm, idealni na polne kwiaty.", badge:"Bestseller" },
+    { id:2, name:"Deska do serwowania z orzecha", artisan:"Piotr Nowak", city:"Zakopane", price:145, cat:"drewno", img:"https://images.pexels.com/photos/18289011/pexels-photo-18289011.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Ręcznie heblowana deska z drewna orzechowego. Olejowana naturalnym olejem lnianym. Wymiary 40×22 cm.", badge:"Nowość" },
+    { id:3, name:"Ręcznie tkany chodnik lniany", artisan:"Maria Wiśniewska", city:"Łowicz", price:320, cat:"tekstylia", img:"https://images.pexels.com/photos/6957067/pexels-photo-6957067.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Tradycyjny chodnik tkany na krośnach z polskiego lnu. Wzór łowicki, szerokość 70 cm. Prać ręcznie.", badge:null },
+    { id:4, name:"Srebrny pierścionek z bursztynem", artisan:"Tomasz Zieliński", city:"Gdańsk", price:275, cat:"bizuteria", img:"https://images.pexels.com/photos/1352783/pexels-photo-1352783.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Pierścionek ze srebra próby 925 z naturalnym bursztynem bałtyckim. Każdy kamień jest unikalny. Rozmiary 14–20.", badge:"Bestseller" },
+    { id:5, name:"Świeca sojowa — zapach lasu", artisan:"Ewa Kamińska", city:"Kraków", price:59, cat:"kosmetyki", img:"https://images.pexels.com/photos/6755809/pexels-photo-6755809.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"100% naturalny wosk sojowy z olejkami eterycznymi sosny i cedrtu. Czas palenia ~45h. Szklany pojemnik wielokrotnego użytku.", badge:null },
+    { id:6, name:"Skórzana torebka ręcznie szyta", artisan:"Katarzyna Lewandowska", city:"Wrocław", price:430, cat:"tekstylia", img:"https://images.pexels.com/photos/3814573/pexels-photo-3814573.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Torebka z włoskiej skóry licowej, szyta ręcznie woskowaną nicią. Wymiary 28×20×8 cm. Regulowany pasek.", badge:"Premium" },
+    { id:7, name:"Linoryt — widok na Tatry", artisan:"Jan Dąbrowski", city:"Nowy Sącz", price:210, cat:"sztuka", img:"https://images.pexels.com/photos/4706134/pexels-photo-4706134.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Ręcznie drukowany linoryt w limitowanej edycji 50 sztuk. Format A3, drukowany na papierze bawełnianym 300g.", badge:"Limitowana edycja" },
+    { id:8, name:"Kowany wieszak na klucze", artisan:"Marek Wójcik", city:"Kielce", price:95, cat:"metal", img:"https://images.pexels.com/photos/4354569/pexels-photo-4354569.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Wieszak wykuty ręcznie w kuźni z żelaza. Pokryty bezbarwnym lakierem. 5 haczyków, szerokość 35 cm.", badge:null },
+    { id:9, name:"Koszyk wiklinowy pleciony", artisan:"Zofia Mazur", city:"Rudnik nad Sanem", price:120, cat:"drewno", img:"https://images.pexels.com/photos/19784261/pexels-photo-19784261.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Tradycyjny koszyk pleciony z wikliny. Idealny na piknik lub jako element dekoracyjny. Średnica 35 cm.", badge:null },
+    { id:10, name:"Ceramiczny pojemnik na miód", artisan:"Łukasz Sikora", city:"Bolesławiec", price:78, cat:"ceramika", img:"https://images.pexels.com/photos/22823/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Pojemnik z ceramiki bolesławieckiej z drewnianą łyżeczką. Wzór tradycyjny \"pawie oczko\". Pojemność 400ml.", badge:"Nowość" },
+    { id:11, name:"Szalik wełniany na drutach", artisan:"Agnieszka Pawlak", city:"Biłgoraj", price:165, cat:"tekstylia", img:"https://images.pexels.com/photos/6957067/pexels-photo-6957067.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop&crop=top", desc:"Ręcznie robiony szalik z polskiej wełny merino. Miękki, ciepły, idealny na zimę. Długość 180 cm.", badge:null },
+    { id:12, name:"Lustro w ramie z drewna lipowego", artisan:"Stanisław Wróbel", city:"Zakopane", price:350, cat:"drewno", img:"https://images.pexels.com/photos/29721692/pexels-photo-29721692.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Lustro z rzeźbioną ramą z drewna lipowego. Wzory góralskie rzeźbione dłutem. Średnica 50 cm.", badge:"Premium" },
+    { id:13, name:"Czajniczek ceramiczny malowany", artisan:"Dorota Szymańska", city:"Bolesławiec", price:220, cat:"ceramika", img:"https://images.pexels.com/photos/18486386/pexels-photo-18486386.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Czajniczek z ceramiki bolesławieckiej malowany ręcznie. Pojemność 1l. Bezpieczny do zmywarki.", badge:null },
+    { id:14, name:"Haftowany obrus ludowy", artisan:"Halina Grabowska", city:"Łowicz", price:280, cat:"tekstylia", img:"https://images.pexels.com/photos/3640960/pexels-photo-3640960.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Obrus lniany z ręcznym haftem łowickim. Wymiary 150×220 cm. Każdy haft jest unikalny.", badge:null },
+    { id:15, name:"Mydło z koziego mleka", artisan:"Natalia Olszewska", city:"Kazimierz Dolny", price:32, cat:"kosmetyki", img:"https://images.pexels.com/photos/6755860/pexels-photo-6755860.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Naturalne mydło ręcznie robione z koziego mleka i olejku lawendowego. Waga 120g. Bez SLS i parabenów.", badge:null },
+    { id:16, name:"Szkatułka intarsjowana", artisan:"Robert Kaczmarek", city:"Poznań", price:410, cat:"drewno", img:"https://images.pexels.com/photos/265906/pexels-photo-265906.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop", desc:"Szkatułka z drewna dębowego z intarsjami z klonu i orzecha. Wyłożona aksamitem. Wymiary 20×15×8 cm.", badge:"Premium" },
+];
+
+var sellerListings = [
+    { id:1, name:"Ceramiczny wazon ręcznie toczony", img:"https://images.pexels.com/photos/357428/pexels-photo-357428.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop", status:"active", price:189, sold:14 },
+    { id:4, name:"Srebrny pierścionek z bursztynem", img:"https://images.pexels.com/photos/1352783/pexels-photo-1352783.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop", status:"active", price:275, sold:9 },
+    { id:6, name:"Skórzana torebka ręcznie szyta", img:"https://images.pexels.com/photos/3814573/pexels-photo-3814573.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop", status:"sold", price:430, sold:5 },
+    { id:7, name:"Linoryt — widok na Tatry", img:"https://images.pexels.com/photos/4706134/pexels-photo-4706134.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop", status:"active", price:210, sold:3 },
+    { id:99, name:"Miska ceramiczna (szkic)", img:"", status:"draft", price:95, sold:0 },
+];
+
+var cart = [];
+var currentCat = 'all';
+
+// ─── NAVIGATION ───
+function navigate(page) {
+    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
+    var el = document.getElementById('page-' + page);
+    if (el) el.classList.add('active');
+    var tab = document.querySelector('.nav-tab[data-page="' + page + '"]');
+    if (tab) tab.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (page === 'categories') renderCatPage();
+}
+
+document.querySelectorAll('.nav-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() { navigate(this.dataset.page); });
+});
+
+// ─── RENDER PRODUCTS ───
+function renderProducts(container, items) {
+    var el = document.getElementById(container);
+    el.innerHTML = items.map(function(p) {
+        return '<div class="card" onclick="openProduct(' + p.id + ')">' +
+            '<div class="card-img">' +
+                '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
+                (p.badge ? '<span class="card-badge">' + p.badge + '</span>' : '') +
+                '<button class="card-fav" onclick="event.stopPropagation();toggleFav(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>' +
+            '</div>' +
+            '<div class="card-body">' +
+                '<h3>' + p.name + '</h3>' +
+                '<div class="card-artisan">' + p.artisan + ' · ' + p.city + '</div>' +
+                '<div class="card-footer">' +
+                    '<div class="card-price">' + p.price + ' zł</div>' +
+                    '<button class="card-add" onclick="event.stopPropagation();addToCart(' + p.id + ')" title="Dodaj do koszyka"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+    }).join('');
+}
+
+function filterCat(cat) {
+    currentCat = cat;
+    document.querySelectorAll('#catChips .cat-chip').forEach(function(c) {
+        c.classList.toggle('active', c.dataset.cat === cat);
+    });
+    var filtered = cat === 'all' ? products : products.filter(function(p) { return p.cat === cat; });
+    renderProducts('productGrid', filtered);
+}
+
+function renderCatPage() {
+    var container = document.getElementById('catChipsFull');
+    container.innerHTML = document.getElementById('catChips').innerHTML;
+    container.querySelectorAll('.cat-chip').forEach(function(c) {
+        c.onclick = function() {
+            currentCat = this.dataset.cat;
+            container.querySelectorAll('.cat-chip').forEach(function(cc) { cc.classList.remove('active'); });
+            this.classList.add('active');
+            var filtered = currentCat === 'all' ? products : products.filter(function(p) { return p.cat === currentCat; });
+            renderProducts('catProductGrid', filtered);
+        };
+        c.classList.toggle('active', c.dataset.cat === currentCat);
+    });
+    var filtered = currentCat === 'all' ? products : products.filter(function(p) { return p.cat === currentCat; });
+    renderProducts('catProductGrid', filtered);
+}
+
+// ─── PRODUCT MODAL ───
+function openProduct(id) {
+    var p = products.find(function(x) { return x.id === id; });
+    if (!p) return;
+    document.getElementById('modalImg').src = p.img;
+    document.getElementById('modalTitle').textContent = p.name;
+    document.getElementById('modalArtisan').innerHTML = '<strong>' + p.artisan + '</strong> · ' + p.city;
+    document.getElementById('modalDesc').textContent = p.desc;
+    document.getElementById('modalPrice').innerHTML = p.price + ' zł<small>+ dostawa od 12 zł</small>';
+    document.getElementById('modalAddBtn').onclick = function() { addToCart(id); closeModal(); };
+    document.getElementById('productModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+    document.getElementById('productModal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// ─── FAVORITES ───
+function toggleFav(btn) {
+    btn.classList.toggle('liked');
+}
+
+// ─── CART ───
+function addToCart(id) {
+    var p = products.find(function(x) { return x.id === id; });
+    if (!p) return;
+    var existing = cart.find(function(c) { return c.id === id; });
+    if (existing) { existing.qty++; }
+    else { cart.push({ id: p.id, name: p.name, artisan: p.artisan, price: p.price, img: p.img, qty: 1 }); }
+    updateCartUI();
+    showToast('Dodano do koszyka: ' + p.name);
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(function(c) { return c.id !== id; });
+    updateCartUI();
+}
+
+function updateCartUI() {
+    var count = cart.reduce(function(s, c) { return s + c.qty; }, 0);
+    var total = cart.reduce(function(s, c) { return s + c.price * c.qty; }, 0);
+    var countEl = document.getElementById('cartCount');
+    countEl.textContent = count;
+    countEl.classList.toggle('show', count > 0);
+    document.getElementById('cartItemCount').textContent = count > 0 ? '(' + count + ')' : '';
+
+    var body = document.getElementById('cartBody');
+    if (cart.length === 0) {
+        body.innerHTML = '<div class="cart-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><p>Twój koszyk jest pusty</p></div>';
+        document.getElementById('cartFooter').style.display = 'none';
+    } else {
+        body.innerHTML = cart.map(function(c) {
+            return '<div class="cart-item">' +
+                '<img src="' + c.img + '" alt="">' +
+                '<div class="cart-item-info">' +
+                    '<h4>' + c.name + '</h4>' +
+                    '<div class="ci-artisan">' + c.artisan + '</div>' +
+                    '<div class="ci-price">' + (c.price * c.qty) + ' zł' + (c.qty > 1 ? ' (' + c.qty + '×)' : '') + '</div>' +
+                '</div>' +
+                '<button class="cart-item-remove" onclick="removeFromCart(' + c.id + ')">✕</button>' +
+            '</div>';
+        }).join('');
+        document.getElementById('cartFooter').style.display = 'block';
+        document.getElementById('cartTotal').textContent = total + ' zł';
+    }
+}
+
+function toggleCart() {
+    document.getElementById('cartOverlay').classList.toggle('open');
+    document.getElementById('cartPanel').classList.toggle('open');
+}
+
+// ─── SELLER LISTINGS ───
+function renderListings() {
+    var body = document.getElementById('listingsBody');
+    body.innerHTML = sellerListings.map(function(l) {
+        var statusLabel = { active: 'Aktywne', draft: 'Szkic', sold: 'Wyprzedane' };
+        return '<tr>' +
+            '<td><div class="listing-product">' +
+                (l.img ? '<img src="' + l.img + '" alt="">' : '<div style="width:44px;height:44px;border-radius:8px;background:var(--surface-alt)"></div>') +
+                '<strong>' + l.name + '</strong>' +
+            '</div></td>' +
+            '<td><span class="status-badge status-' + l.status + '">' + statusLabel[l.status] + '</span></td>' +
+            '<td><strong>' + l.price + ' zł</strong></td>' +
+            '<td>' + l.sold + '</td>' +
+            '<td><button class="btn-outline btn-sm" onclick="showToast(\'Edycja — wkrótce!\')">Edytuj</button></td>' +
+        '</tr>';
+    }).join('');
+}
+
+// ─── ADD PRODUCT ───
+function handleAddProduct(e, isDraft) {
+    if (e) e.preventDefault();
+    var name = document.getElementById('prodName').value;
+    var price = document.getElementById('prodPrice').value;
+    if (!name || !price) { showToast('Uzupełnij nazwę i cenę'); return; }
+    sellerListings.unshift({
+        id: Date.now(), name: name, img: '', status: isDraft ? 'draft' : 'active',
+        price: parseFloat(price), sold: 0
+    });
+    renderListings();
+    document.getElementById('addProductForm').reset();
+    navigate('dashboard');
+    showToast(isDraft ? 'Zapisano jako szkic' : 'Produkt opublikowany!');
+}
+
+// ─── SEARCH ───
+document.getElementById('globalSearch').addEventListener('input', function() {
+    var q = this.value.toLowerCase().trim();
+    if (!q) { filterCat('all'); return; }
+    var results = products.filter(function(p) {
+        return p.name.toLowerCase().indexOf(q) !== -1 ||
+               p.artisan.toLowerCase().indexOf(q) !== -1 ||
+               p.city.toLowerCase().indexOf(q) !== -1 ||
+               p.cat.toLowerCase().indexOf(q) !== -1;
+    });
+    renderProducts('productGrid', results);
+    navigate('home');
+});
+
+// ─── TOAST ───
+function showToast(msg) {
+    var el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._t);
+    el._t = setTimeout(function() { el.classList.remove('show'); }, 2500);
+}
+
+// ─── HAMBURGER ───
+document.getElementById('hamburger').addEventListener('click', function() {
+    this.classList.toggle('active');
+    document.getElementById('navTabs').style.display =
+        document.getElementById('navTabs').style.display === 'flex' ? '' : 'flex';
+});
+
+// ─── INIT ───
+renderProducts('productGrid', products);
+renderListings();
+updateCartUI();
+</script>
+</body>
+</html>
