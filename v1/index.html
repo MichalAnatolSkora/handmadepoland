@@ -27,12 +27,19 @@
 
         /* HERO */
         .hero {
-            text-align: center; padding: 64px 20px 48px;
+            display: flex; align-items: center; justify-content: center; gap: 48px;
+            padding: 64px 40px 48px; max-width: 1100px; margin: 0 auto;
             background: linear-gradient(180deg, #fff 0%, #fafaf8 100%);
+        }
+        .hero-text { flex: 1; }
+        .hero-img { flex-shrink: 0; }
+        .hero-img img {
+            width: 280px; height: 340px; object-fit: cover;
+            border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.1);
         }
         .hero h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: 12px; color: #2d2d2d; }
         .hero h1 em { font-style: normal; color: #b5651d; }
-        .hero p { font-size: 1.1rem; color: #777; max-width: 500px; margin: 0 auto 32px; }
+        .hero p { font-size: 1.1rem; color: #777; max-width: 500px; margin-bottom: 32px; }
         .search-bar {
             display: flex; max-width: 480px; margin: 0 auto;
             border: 2px solid #e8e4df; border-radius: 28px; overflow: hidden; background: #fff;
@@ -79,7 +86,10 @@
         .card-img {
             width: 100%; aspect-ratio: 1; background: #ede8e1;
             display: flex; align-items: center; justify-content: center;
-            font-size: 2.5rem;
+            font-size: 2.5rem; overflow: hidden;
+        }
+        .card-img img {
+            width: 100%; height: 100%; object-fit: cover;
         }
         .card-body { padding: 16px; }
         .card-body h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
@@ -111,11 +121,16 @@
 </nav>
 
 <div class="hero">
-    <h1>Unikalne <em>rękodzieło</em> z Polski</h1>
-    <p>Odkryj ręcznie robione produkty od polskich rzemieślników. Każdy przedmiot to oryginał.</p>
-    <div class="search-bar">
-        <input type="text" placeholder="Szukaj ceramiki, biżuterii, drewna...">
-        <button>Szukaj</button>
+    <div class="hero-text">
+        <h1>Unikalne <em>rękodzieło</em> z Polski</h1>
+        <p>Odkryj ręcznie robione produkty od polskich rzemieślników. Każdy przedmiot to oryginał.</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Szukaj ceramiki, biżuterii, drewna...">
+            <button>Szukaj</button>
+        </div>
+    </div>
+    <div class="hero-img">
+        <img src="https://images.pexels.com/photos/17846717/pexels-photo-17846717.jpeg?auto=compress&cs=tinysrgb&w=560&h=680&fit=crop" alt="Rzemieślniczka przy kole garncarskim">
     </div>
 </div>
 
@@ -134,7 +149,7 @@
     <h2>Promowane produkty</h2>
     <div class="grid">
         <div class="card">
-            <div class="card-img">🏺</div>
+            <div class="card-img"><img src="https://images.pexels.com/photos/357428/pexels-photo-357428.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Ceramiczny wazon"></div>
             <div class="card-body">
                 <span class="badge">Promowane</span>
                 <h3>Ceramiczny wazon ręcznie toczony</h3>
@@ -143,7 +158,7 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-img">🪵</div>
+            <div class="card-img"><img src="https://images.pexels.com/photos/18289011/pexels-photo-18289011.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Deska do serwowania"></div>
             <div class="card-body">
                 <span class="badge">Promowane</span>
                 <h3>Deska do serwowania z orzecha</h3>
@@ -152,7 +167,7 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-img">🧶</div>
+            <div class="card-img"><img src="https://images.pexels.com/photos/6957067/pexels-photo-6957067.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Chodnik lniany"></div>
             <div class="card-body">
                 <span class="badge">Promowane</span>
                 <h3>Ręcznie tkany chodnik lniany</h3>
@@ -161,7 +176,7 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-img">💍</div>
+            <div class="card-img"><img src="https://images.pexels.com/photos/1352783/pexels-photo-1352783.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Pierścionek z bursztynem"></div>
             <div class="card-body">
                 <span class="badge">Promowane</span>
                 <h3>Srebrny pierścionek z bursztynem</h3>
@@ -170,7 +185,7 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-img">🕯️</div>
+            <div class="card-img"><img src="https://images.pexels.com/photos/6755809/pexels-photo-6755809.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Świeca sojowa"></div>
             <div class="card-body">
                 <span class="badge">Promowane</span>
                 <h3>Świeca sojowa — zapach lasu</h3>
@@ -179,7 +194,7 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-img">👜</div>
+            <div class="card-img"><img src="https://images.pexels.com/photos/3814573/pexels-photo-3814573.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Skórzana torebka"></div>
             <div class="card-body">
                 <span class="badge">Promowane</span>
                 <h3>Skórzana torebka ręcznie szyta</h3>
@@ -188,7 +203,7 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-img">🖼️</div>
+            <div class="card-img"><img src="https://images.pexels.com/photos/4706134/pexels-photo-4706134.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Linoryt"></div>
             <div class="card-body">
                 <span class="badge">Promowane</span>
                 <h3>Linoryt — widok na Tatry</h3>
@@ -197,12 +212,111 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-img">⚒️</div>
+            <div class="card-img"><img src="https://images.pexels.com/photos/4354569/pexels-photo-4354569.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Kowany wieszak"></div>
             <div class="card-body">
                 <span class="badge">Promowane</span>
                 <h3>Kowany wieszak na klucze</h3>
                 <div class="artisan">Marek Wójcik — Kielce</div>
                 <div class="price">95 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/19784261/pexels-photo-19784261.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Koszyk wiklinowy"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Koszyk wiklinowy pleciony</h3>
+                <div class="artisan">Zofia Mazur — Rudnik nad Sanem</div>
+                <div class="price">120 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/22823/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Pojemnik na miód"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Ceramiczny pojemnik na miód</h3>
+                <div class="artisan">Łukasz Sikora — Bolesławiec</div>
+                <div class="price">78 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/6957067/pexels-photo-6957067.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop&crop=top" alt="Szalik wełniany"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Szalik wełniany na drutach</h3>
+                <div class="artisan">Agnieszka Pawlak — Biłgoraj</div>
+                <div class="price">165 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/29721692/pexels-photo-29721692.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Lustro drewniane"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Lustro w ramie z drewna lipowego</h3>
+                <div class="artisan">Stanisław Wróbel — Zakopane</div>
+                <div class="price">350 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/18486386/pexels-photo-18486386.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Czajniczek ceramiczny"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Czajniczek ceramiczny malowany</h3>
+                <div class="artisan">Dorota Szymańska — Bolesławiec</div>
+                <div class="price">220 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/3640960/pexels-photo-3640960.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Haftowany obrus"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Haftowany obrus ludowy</h3>
+                <div class="artisan">Halina Grabowska — Łowicz</div>
+                <div class="price">280 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/3853199/pexels-photo-3853199.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Ukulele ręcznie robione"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Drewniane ukulele ręcznie robione</h3>
+                <div class="artisan">Krzysztof Jankowski — Lublin</div>
+                <div class="price">890 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/54216/pexels-photo-54216.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Stołek dębowy"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Stołek dębowy rzeźbiony</h3>
+                <div class="artisan">Wojciech Król — Bieszczady</div>
+                <div class="price">520 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/6755860/pexels-photo-6755860.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Mydło naturalne"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Naturalne mydło z koziego mleka</h3>
+                <div class="artisan">Natalia Olszewska — Kazimierz Dolny</div>
+                <div class="price">32 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/1395306/pexels-photo-1395306.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Maska drewniana"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Maska drewniana — tradycja góralska</h3>
+                <div class="artisan">Tadeusz Baran — Nowy Targ</div>
+                <div class="price">175 zł</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="https://images.pexels.com/photos/265906/pexels-photo-265906.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop" alt="Szkatułka"></div>
+            <div class="card-body">
+                <span class="badge">Promowane</span>
+                <h3>Szkatułka intarsjowana</h3>
+                <div class="artisan">Robert Kaczmarek — Poznań</div>
+                <div class="price">410 zł</div>
             </div>
         </div>
     </div>
