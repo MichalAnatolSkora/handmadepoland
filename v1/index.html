@@ -27,11 +27,11 @@
 
         /* HERO */
         .hero {
-            display: flex; align-items: center; justify-content: center; gap: 48px;
+            display: flex; align-items: center; gap: 48px;
             padding: 64px 40px 48px; max-width: 1100px; margin: 0 auto;
-            background: linear-gradient(180deg, #fff 0%, #f8f5f0 100%);
+            background: linear-gradient(180deg, #fffdf9 0%, #f8f5f0 100%);
         }
-        .hero-text { flex: 1; }
+        .hero-text { flex: 1; min-width: 0; }
         .hero-img { flex-shrink: 0; }
         .hero-img img {
             width: 280px; height: 340px; object-fit: cover;
@@ -41,7 +41,7 @@
         .hero h1 em { font-style: normal; color: #a0724a; }
         .hero p { font-size: 1.1rem; color: #8a7e72; max-width: 500px; margin-bottom: 32px; }
         .search-bar {
-            display: flex; max-width: 480px; margin: 0 auto;
+            display: flex; max-width: 480px;
             border: 2px solid #e0d5c7; border-radius: 28px; overflow: hidden; background: #fffdf9;
         }
         .search-bar input {
